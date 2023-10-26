@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@expo/ngrok": "^4.1.0",
-    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-async-storage/async-storage": "^1.18.2",
     "@react-navigation/native": "^6.1.8",
     "@react-navigation/stack": "^6.3.18",
     "expo": "~49.0.13",
@@ -23,7 +23,8 @@
     "react-native-maps": "1.7.1",
     "react-native-modal": "^13.0.1",
     "react-native-share": "^9.4.1",
-    "react-native-vector-icons": "^10.0.0"
+    "react-native-vector-icons": "^10.0.0",
+    "set-cookie-parser": "^2.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -39,7 +39,6 @@ export default function SignupScreen( {navigation} ) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
 
-
   const handleSignup = async () => {
   
    if (formIsValid) {
@@ -91,7 +90,6 @@ export default function SignupScreen( {navigation} ) {
     const isFormValid =
       email.trim() !== '' &&
       pass.trim() !== '' &&
-
       true;
     setFormIsValid(isFormValid);
   };
@@ -100,8 +98,7 @@ export default function SignupScreen( {navigation} ) {
     updateFormValidity();
   }, [email, pass]);
 
-  return (
-    
+  return (    
     <View style={styles.container}>
       <Header /> 
       <Text style={styles.signuptext}>Signup to continue..!</Text>
@@ -111,16 +108,12 @@ export default function SignupScreen( {navigation} ) {
           placeholder="FirstName"
           value={firstName}
           onChangeText={setFirstName}
-
-
         />
         <TextInput
           style={styles.input}
           placeholder="LastName"
           value={lastName}
           onChangeText={ text => setLastName(text)}
-
-
         />
         <TextInput
           style={styles.input}
@@ -131,7 +124,6 @@ export default function SignupScreen( {navigation} ) {
             setEmail(text);
             updateFormValidity();
           }}
-
         />
         <TextInput
           style={styles.input}
@@ -139,7 +131,6 @@ export default function SignupScreen( {navigation} ) {
           keyboardType="phone-pad"
           value={phone}
           onChangeText={setphone}
-
         />
         <DropDownPicker
         open={open}
@@ -182,8 +173,7 @@ export default function SignupScreen( {navigation} ) {
           keyboardType="phone-pad"
           value={zip}
           onChangeText={setzip}
-        />
-        
+        />        
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -203,14 +193,11 @@ export default function SignupScreen( {navigation} ) {
             setConfirmPass(text);
             updateFormValidity();
           }}
-        />
-
-        
+        />        
         <View style={styles.signupcontainer}>
         <TouchableOpacity
           onPress={handleSignup}
-          style={[styles.signupButton, !formIsValid && styles.disabledButton]}
-          
+          style={[styles.signupButton, !formIsValid && styles.disabledButton]}          
         >
           <Text style={styles.signupButtonText}>SignUp</Text>
         </TouchableOpacity>

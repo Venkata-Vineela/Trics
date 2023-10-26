@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { styles } from '../styles';
 import Header from './Header';
 import Modal from 'react-native-modal';
+import setCookie from 'set-cookie-parser';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login( {navigation} ) {
 
@@ -10,6 +12,43 @@ export default function Login( {navigation} ) {
   const [pass, setPassword] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+
+  const saveCookies = async (cookies) => {
+    try {
+      await AsyncStorage.setItem('cookies', JSON.stringify(cookies));
+      console.log('Cookies saved successfully.');
+    } catch (error) {
+      console.error('Error saving cookies:', error);
+    }
+  }
+  
+  // Retrieving cookies
+  const retrieveCookies = async () => {
+    try {
+      const cookiesString = await AsyncStorage.getItem('cookies');
+      const cookies = JSON.parse(cookiesString);
+      return cookies;
+    } catch (error) {
+      console.error('Error retrieving cookies:', error);
+      return null;
+    }
+  }
+
+  const makeFetchParams = (data) => {
+    const cookies = retrieveCookies // SecureStore or AsyncStorage
+    const c_arr = cookies.map(d => { return d.name+'='+d.value; });
+    const cookieStr = c_arr.join(';');
+    return {
+        method: 'GET',
+        credentials: 'omit',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'cookie': cookieStr
+        },
+        body: data
+    };
+};
 
   const handleLogin = async () => {
     // Create object to send in POST request
@@ -25,16 +64,36 @@ export default function Login( {navigation} ) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)  
+        body: JSON.stringify(userData),
+        credentials: 'include'
       });
      
+      console.log(response);  
 
       const data = await response.json();
       console.log(data);
+
       // Check if login was successful
       if(response.status==200) {
         // Navigate to Home screen
-        navigation.navigate('Home'); 
+      let cookies, cookieHeader, serverData;
+          cookieHeader = setCookie.splitCookiesString(response.headers.get('set-cookie'));
+          cookies = setCookie.parse(cookieHeader);
+          console.log(cookies); // array
+          // Save cookies array to SecureStore or AsyncStorage
+          saveCookies(cookies);
+
+        const protectedResponse = await fetch('http://192.168.0.188:5000/protected', makeFetchParams);
+  
+        const protectedData = await protectedResponse.json();
+  
+        console.log('Protected Response:', protectedResponse);
+        console.log('Protected Data:', protectedData);
+  
+        if (protectedResponse.status === 200) {
+          // Navigate to Home screen or handle the protected data
+          navigation.navigate('Home');
+        }
       } else {
         // Show error 
         // alert('Login failed');
