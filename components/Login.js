@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { styles } from '../styles';
 import Header from './Header';
+import Modal from 'react-native-modal';
 
 export default function Login( {navigation} ) {
 
   const [username, setUsername] = useState();
   const [pass, setPassword] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
 
   const handleLogin = async () => {
     // Create object to send in POST request
@@ -34,12 +37,16 @@ export default function Login( {navigation} ) {
         navigation.navigate('Home'); 
       } else {
         // Show error 
-        alert('Login failed');
+        // alert('Login failed');
+        setPopupMessage('Login Failed');
+        setIsModalVisible(true);
       }
 
     } catch(error) {
       console.log(error);
-      alert('An error occurred. Please try again later.');
+      //alert('An error occurred. Please try again later.');
+      setPopupMessage('An error occurred. Please try again later.');
+      setIsModalVisible(true);
     }
   }
 
@@ -71,6 +78,14 @@ export default function Login( {navigation} ) {
         </TouchableOpacity>
         </View>
       </View>
+      <Modal isVisible={isModalVisible}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalText}>{popupMessage}</Text>
+          <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+            <Text style={styles.modalCloseButton}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
     
   );

@@ -1,8 +1,9 @@
-import React,{ useState }  from 'react';
+import React,{ useState,  useEffect}  from 'react';
 import { View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { styles } from '../styles';
 import Header from './Header';
 import DropDownPicker from 'react-native-dropdown-picker';
+import Modal from 'react-native-modal';
 
 export default function SignupScreen( {navigation} ) {
   const [open, setOpen] = useState(false);
@@ -28,29 +29,36 @@ export default function SignupScreen( {navigation} ) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
   const [phone, setphone] = useState('');
   const [street_address, setstreet_address] = useState('');
   const [city, setcity] = useState('');
   const [state, setstate] = useState('');
   const [zip, setzip] = useState('');
+  const [formIsValid, setFormIsValid] = useState(false); 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+
 
   const handleSignup = async () => {
+  
+   if (formIsValid) {
     console.log("in signup")
-  try {
-  const signupData = {
-    username: email, 
-    pass, 
-    firstName,
-    lastName,
-    phone,
-    organization: value,
-    street_address,
-    city,
-    state,
-    zip, 
-  };
+    try {
+      const signupData = {
+      username: email, 
+      pass, 
+      firstName,
+      lastName,
+      phone,
+      organization: value,
+      street_address,
+      city,
+      state,
+      zip, 
+      };
 
-  const response = await fetch('http://192.168.0.188:5000/signup', {
+    const response = await fetch('http://192.168.0.188:5000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -61,16 +69,36 @@ export default function SignupScreen( {navigation} ) {
       if(response.status==200){
         const responseData = await response.json();
         if(response.status==200) {
-          navigation.navigate('Login'); 
-          alert(responseData.message);
+           
+          setPopupMessage(responseData.message);
+          navigation.navigate('Login');
+          setIsModalVisible(true);
         }
         
       }
-  } catch (error) {
-     alert("error signing up")
-   }
+    } catch (error) {
+     setPopupMessage('Error Signing up');
+     setIsModalVisible(true);
+    }
+  } else {
+    setPopupMessage('Please fill in all the required fields');
+    setIsModalVisible(true);
+  }
 
   };
+
+  const updateFormValidity = () => {
+    const isFormValid =
+      email.trim() !== '' &&
+      pass.trim() !== '' &&
+
+      true;
+    setFormIsValid(isFormValid);
+  };
+
+  useEffect(() => {
+    updateFormValidity();
+  }, [email, pass]);
 
   return (
     
@@ -99,8 +127,10 @@ export default function SignupScreen( {navigation} ) {
           placeholder="Email"
           keyboardType="email-address"
           value={email}
-          onChangeText={setEmail}
-
+          onChangeText={(text) => {
+            setEmail(text);
+            updateFormValidity();
+          }}
 
         />
         <TextInput
@@ -158,19 +188,29 @@ export default function SignupScreen( {navigation} ) {
           style={styles.input}
           placeholder="Password"
           secureTextEntry={true}
+          value={pass}
+          onChangeText={(text) => {
+            setPass(text);
+            updateFormValidity();
+          }}
         />
         <TextInput
           style={styles.input}
           placeholder="Confirm Password"
           secureTextEntry={true}
-          value={pass}
-          onChangeText={setPass}
-
+          value={confirmPass}
+          onChangeText={(text) => {
+            setConfirmPass(text);
+            updateFormValidity();
+          }}
         />
+
+        
         <View style={styles.signupcontainer}>
         <TouchableOpacity
           onPress={handleSignup}
-          style={styles.signupButton}
+          style={[styles.signupButton, !formIsValid && styles.disabledButton]}
+          
         >
           <Text style={styles.signupButtonText}>SignUp</Text>
         </TouchableOpacity>
@@ -185,6 +225,14 @@ export default function SignupScreen( {navigation} ) {
         </TouchableOpacity>
         <Text style={styles.signuplogintext}>Here.</Text></View>
       </View>
+      <Modal isVisible={isModalVisible}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalText}>{popupMessage}</Text>
+          <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+            <Text style={styles.modalCloseButton}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
    
   );

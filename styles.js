@@ -262,7 +262,27 @@ reportButton: {
   borderRadius: 10, 
   width: 120,
   alignItems: 'center',
-}
+},
+modal: {
+  justifyContent: 'center', // Center the modal vertically
+  alignItems: 'center', // Center the modal horizontally
+},
+modalContainer: {
+  backgroundColor: 'white', // Background color for the modal
+  padding: 30,
+  borderRadius: 10,
+},
+modalText: {
+  fontSize: 18,
+  marginBottom: 25,
+  textAlign: 'center',
+},
+modalCloseButton: {
+  fontSize: 16,
+  color:'#f4584d',
+  textAlign: 'center',
+  marginTop: 10,
+},
 
 
 });
