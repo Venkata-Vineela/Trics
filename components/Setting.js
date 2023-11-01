@@ -18,6 +18,26 @@ const Setting = ({ navigation }) => {
     { type: 'General', name: 'Share' },
   ];
 
+  const handlelogout = async () => {
+    try {
+      console.log("entered logout");
+      const reqlogout = await fetch('http://192.168.0.188:5000/logout');
+      // console.log(reqlogout)
+
+    if(reqlogout.status==200) {
+      console.log("logged out Successfully...")
+      navigation.navigate('Login');
+    }
+    else {
+      console.log("....")
+    }
+    }
+    catch{
+      console.log(error);
+      setPopupMessage('Network Error while logging out...');
+
+    }
+  }
   const sortedSettings = {};
 
   settings.forEach((setting) => {
@@ -44,8 +64,9 @@ const Setting = ({ navigation }) => {
       case 'Report':
         navigation.navigate('updateprofile.js');
         break;
-      case 'login':
-        navigation.navigate('login.js');
+      case 'Logout':
+        handlelogout();
+        
         break;
      
       default:

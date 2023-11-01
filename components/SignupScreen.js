@@ -70,8 +70,8 @@ export default function SignupScreen( {navigation} ) {
         if(response.status==200) {
            
           setPopupMessage(responseData.message);
-          navigation.navigate('Login');
           setIsModalVisible(true);
+
         }
         
       }
@@ -196,8 +196,13 @@ export default function SignupScreen( {navigation} ) {
         />        
         <View style={styles.signupcontainer}>
         <TouchableOpacity
-          onPress={handleSignup}
-          style={[styles.signupButton, !formIsValid && styles.disabledButton]}          
+          onPress={() => {
+            navigation.navigate('Signup');                
+          }}          
+          style={styles.signupButton}
+
+          // onPress={handleSignup}
+          // style={[styles.signupButton, !formIsValid && styles.disabledButton]}          
         >
           <Text style={styles.signupButtonText}>SignUp</Text>
         </TouchableOpacity>
@@ -215,7 +220,12 @@ export default function SignupScreen( {navigation} ) {
       <Modal isVisible={isModalVisible}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalText}>{popupMessage}</Text>
-          <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+          <TouchableOpacity onPress={() => {
+            setIsModalVisible(false);
+            if (popupMessage === "Signup successful") {
+              navigation.navigate('Login');
+            }
+          }}>
             <Text style={styles.modalCloseButton}>Close</Text>
           </TouchableOpacity>
         </View>
@@ -224,3 +234,4 @@ export default function SignupScreen( {navigation} ) {
    
   );
 }
+
