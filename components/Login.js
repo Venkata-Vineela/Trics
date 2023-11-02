@@ -78,10 +78,8 @@ export default function Login( {navigation} ) {
         />
         <View style={styles.signupcontainer}>
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Home');                
-          }}
-          // onPress={handleLogin}
+          
+          onPress={handleLogin}
           style={styles.signupButton}
         >
           <Text style={styles.signupButtonText}>Login</Text>

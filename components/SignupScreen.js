@@ -199,10 +199,10 @@ export default function SignupScreen( {navigation} ) {
           onPress={() => {
             navigation.navigate('Signup');                
           }}          
-          style={styles.signupButton}
+          
 
-          // onPress={handleSignup}
-          // style={[styles.signupButton, !formIsValid && styles.disabledButton]}          
+          onPress={handleSignup}
+          style={[styles.signupButton, !formIsValid && styles.disabledButton]}          
         >
           <Text style={styles.signupButtonText}>SignUp</Text>
         </TouchableOpacity>
