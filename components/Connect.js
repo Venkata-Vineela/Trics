@@ -10,6 +10,8 @@ export default function Connect({ navigation }) {
   const [isSearching, setIsSearching] = useState(false);
   const [defaultSuggestions, setDefaultSuggestions] = useState([]); // Define defaultSuggestions state
 
+  // handleSearch
+
   const handleSearch = async (text) => {
     setSearchText(text);
 
