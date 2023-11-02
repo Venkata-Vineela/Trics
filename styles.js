@@ -97,6 +97,7 @@ export const styles = StyleSheet.create({
   },
   homecontent: {
     flex:1, 
+    margin: 18
   },
   footer: {
     flexDirection: 'row',
@@ -283,6 +284,13 @@ modalCloseButton: {
   textAlign: 'center',
   marginTop: 10,
 },
+searchconnections: {
+  
+  margin: 5,
+  flexDirection: 'row'
+},
 
 
 });
+
+
