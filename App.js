@@ -13,6 +13,7 @@ import Reqhelp from './components/Reqhelp';
 import PermissionSetting from './components/PermissionSetting';
 import ReportIssue from './components/ReportSettings';
 import NotificationSetting from './components/NotificationSetting';
+import Profile from './components/Profile';
 
 
 const Stack = createStackNavigator(); 
@@ -80,6 +81,11 @@ export default function App() {
         <Stack.Screen
           name="ReportIssue"
           component={ReportIssue}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={Profile}
           options={{ headerShown: false }}
         />
 

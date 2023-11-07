@@ -289,6 +289,35 @@ searchconnections: {
   margin: 5,
   flexDirection: 'row'
 },
+cardContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: 16,
+  backgroundColor: '#FDF2F3',
+  marginBottom: 10,
+  borderRadius: 10,
+},
+userInfo: {
+  marginLeft: 16,
+},
+username: {
+  fontSize: 16,
+  fontWeight: 'bold',
+},
+profilecontainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+profiletitle: {
+  fontSize: 24,
+  fontWeight: 'bold',
+},
+profileusername: {
+  fontSize: 18,
+  marginTop: 20,
+},
+
 
 
 });

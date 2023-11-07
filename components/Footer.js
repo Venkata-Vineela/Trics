@@ -38,6 +38,13 @@ export default function Footer ({ navigation }) {
         <Icon name="settings" size={24} color="black" />
         <Text>Settings</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+        <Icon name="person" size={24} color="black" />
+        <Text>Profile</Text>
+      </TouchableOpacity>
+
+
     </View>
   );
 };

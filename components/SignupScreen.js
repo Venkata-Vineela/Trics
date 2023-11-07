@@ -196,9 +196,9 @@ export default function SignupScreen( {navigation} ) {
         />        
         <View style={styles.signupcontainer}>
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Signup');                
-          }}          
+          // onPress={() => {
+          //   navigation.navigate('Signup');                
+          // }}          
           
 
           onPress={handleSignup}
