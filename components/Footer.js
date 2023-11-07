@@ -39,7 +39,7 @@ export default function Footer ({ navigation }) {
         <Text>Settings</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Userprofile')}>
         <Icon name="person" size={24} color="black" />
         <Text>Profile</Text>
       </TouchableOpacity>

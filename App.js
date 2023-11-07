@@ -14,6 +14,7 @@ import PermissionSetting from './components/PermissionSetting';
 import ReportIssue from './components/ReportSettings';
 import NotificationSetting from './components/NotificationSetting';
 import Profile from './components/Profile';
+import Userprofile from './components/Userprofile';
 
 
 const Stack = createStackNavigator(); 
@@ -86,6 +87,11 @@ export default function App() {
         <Stack.Screen
           name="Profile"
           component={Profile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Userprofile"
+          component={Userprofile}
           options={{ headerShown: false }}
         />
 
