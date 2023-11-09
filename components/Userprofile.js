@@ -3,6 +3,7 @@ import { View, Text} from 'react-native';
 import { styles } from '../styles';
 import Header from './Header';
 import Footer from './Footer';
+import { SERVER_IP } from './config';
 
 
 export default function HomePage({navigation}) {
@@ -17,7 +18,7 @@ export default function HomePage({navigation}) {
     try {
         // console.log(username);
         // Make an API request to the server to fetch user details
-        const response = await fetch(`http://192.168.0.188:5000/get_userprofile_data`, {
+        const response = await fetch(`${SERVER_IP}/get_userprofile_data`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ export default function HomePage({navigation}) {
         if (response.status === 200) {
         const data = await response.json();
         setUserData(data);
-        // console.log(data);
+        console.log(data);
         } else {
         console.error('API request failed with status:', response.status);
         

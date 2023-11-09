@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { styles } from '../styles';
 import Header from './Header';
 import Modal from 'react-native-modal';
+import { SERVER_IP } from './config';
 
 export default function Login( {navigation} ) {
 
@@ -20,7 +21,7 @@ export default function Login( {navigation} ) {
     
     try {
       // Make POST request to Flask server
-      const response = await fetch('http://192.168.0.188:5000/login', {
+      const response = await fetch(`${SERVER_IP}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,7 +36,8 @@ export default function Login( {navigation} ) {
 
       // Check if login was successful
       if(response.status==200) {
-        const protectedResponse = await fetch('http://192.168.0.188:5000/protected');
+        
+        const protectedResponse = await fetch(`${SERVER_IP}/protected`);
   
         const protectedData = await protectedResponse.json();
   

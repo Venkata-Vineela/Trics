@@ -4,6 +4,7 @@ import { styles } from '../styles';
 import Header from './Header';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Modal from 'react-native-modal';
+import { SERVER_IP } from './config';
 
 export default function SignupScreen( {navigation} ) {
   const [open, setOpen] = useState(false);
@@ -57,13 +58,14 @@ export default function SignupScreen( {navigation} ) {
       zip, 
       };
 
-    const response = await fetch('http://192.168.0.188:5000/signup', {
+    const response = await fetch(`${SERVER_IP}/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(signupData)  
       });
+      console.log(response);
 
       if(response.status==200){
         const responseData = await response.json();

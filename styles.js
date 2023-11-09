@@ -317,6 +317,34 @@ profileusername: {
   fontSize: 18,
   marginTop: 20,
 },
+requserInfo: {
+  marginLeft: 16,  
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+
+},
+acceptButton: {
+  backgroundColor: '#f4584d',
+    padding: 10,
+    borderRadius: 10,
+    width: 90,
+    alignItems: 'center',
+},
+usernameContainer:{
+  flex: 1
+},
+acceptbuttonContainer:{
+  marginRight: 10,
+},
+post: {
+  alignItems: 'center',
+  
+},
+
+
+
+
 
 
 

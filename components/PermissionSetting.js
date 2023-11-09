@@ -4,6 +4,7 @@ import { styles } from '../styles';
 import Header from './Header';
 import Footer from './Footer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SERVER_IP } from './config';
 
 let PERMISSION_KEY = 'permissionSetting';
 const PermissionSetting = ({ navigation }) => {

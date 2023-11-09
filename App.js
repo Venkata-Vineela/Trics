@@ -15,6 +15,7 @@ import ReportIssue from './components/ReportSettings';
 import NotificationSetting from './components/NotificationSetting';
 import Profile from './components/Profile';
 import Userprofile from './components/Userprofile';
+import Addpost from './components/Addpost';
 
 
 const Stack = createStackNavigator(); 
@@ -92,6 +93,11 @@ export default function App() {
         <Stack.Screen
           name="Userprofile"
           component={Userprofile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Addpost"
+          component={Addpost}
           options={{ headerShown: false }}
         />
 

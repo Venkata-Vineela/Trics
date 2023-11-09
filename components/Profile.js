@@ -3,68 +3,75 @@ import { View, Text, TouchableOpacity} from 'react-native';
 import { styles } from '../styles';
 import Header from './Header';
 import Footer from './Footer';
+import { SERVER_IP } from './config';
 
 export default function Profile ({ route, navigation }) {
     const {username} = route.params;
     const [userData, setUserData] = useState(null);
     const [Data, setData] = useState(null);
     const [isFriend, setIsFriend] = useState(false);
+    const [isRequested, setIsRequested] = useState(false);
 
     useEffect(() => {
         checkFriendStatus(username);
         fetchUserData(username);        
       }, [username]);
 
+    
+
+    const fetchUserData = async (username) => {
+        try {
+            const response = await fetch(`${SERVER_IP}/get_user_data`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({username})
+            });
+    
+            if (response.status === 200) {
+            const data = await response.json();
+            setUserData(data);
+            console.log(data);
+            } else {
+            console.error('API request failed with status:', response.status);
+            
+            }
+        } catch (error) {
+            console.error('Error occurred while making the API request:', error);       
+        }
+        };
+
     const checkFriendStatus = async (username) => {
         try {
-            const response = await fetch('http://192.168.0.188:5000/isfriend', {
+            console.log('friend status req sent to server');
+            const response = await fetch(`${SERVER_IP}/friendstatus`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({username}),
             });
+            
 
             if (response.status===200){
                 const data = await response.json()
                 setData(data);
-                
-                setIsFriend(data);
+                console.log(data);
+                setIsRequested(data.isrequested);
+                setIsFriend(data.isfriend);
             }
         } catch(error){
             console.error('Error checking friend status:', error);
         }
     }
-    const fetchUserData = async (username) => {
-    try {
-        // console.log(username);
-        // Make an API request to the server to fetch user details
-        const response = await fetch(`http://192.168.0.188:5000/get_user_data`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username})
-        });
-
-        if (response.status === 200) {
-        const data = await response.json();
-        setUserData(data);
-        // console.log(data);
-        } else {
-        console.error('API request failed with status:', response.status);
-        
-        }
-    } catch (error) {
-        console.error('Error occurred while making the API request:', error);       
-    }
-    };
+    
 
     const connectusers = async () => {
         if(isFriend){
             console.log('remove pressed');
             try {
-                const response = await fetch('http://192.168.0.188:5000/removefriend', {
+                const response = await fetch(`${SERVER_IP}/removefriend`, {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +80,7 @@ export default function Profile ({ route, navigation }) {
                 });
                 if (response.status === 200) {
                     const data = await response.json()
-                    
+                    console.log(data);
                     setIsFriend(false);
                     
                 } else {
@@ -84,10 +91,32 @@ export default function Profile ({ route, navigation }) {
               }
 
 
-        } else {
+        } else if(isRequested) {
+            // try {
+            //     console.log('Accept Pressed');
+            //     const response = await fetch(`${SERVER_IP}/acceptfirend`,{
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify({username}),
+            //     })
+            //     if (response.status === 200) {
+            //         const data = await response.json();
+            //         setIsFriend(data);
+    
+            //         // Friend request sent successfully
+                    
+            //     } else {
+            //         console.error('Failed to send friend request:', response.status);
+            //     }
+            // } catch (error) {
+            //     console.error('Error sending friend request:', error);
+            // }
+        }  else {
             try {
-                console.log('connect Pressed');
-                const response = await fetch('http://192.168.0.188:5000/connectusers',{
+                console.log('request Pressed');
+                const response = await fetch(`${SERVER_IP}/requestfriend`,{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -96,7 +125,8 @@ export default function Profile ({ route, navigation }) {
                 })
                 if (response.status === 200) {
                     const data = await response.json();
-                    setIsFriend(data);
+                    console.log(data);
+                    setIsRequested(true);
     
                     // Friend request sent successfully
                     
@@ -106,7 +136,8 @@ export default function Profile ({ route, navigation }) {
             } catch (error) {
                 console.error('Error sending friend request:', error);
             }
-        }                
+
+        }              
     };    
    
     return (
@@ -120,10 +151,15 @@ export default function Profile ({ route, navigation }) {
                         <Text style={styles.profilefirstname}>{userData[0].lastname}</Text>
                         <Text style={styles.profilefirstname}>{userData[0].organization}</Text>
                         <TouchableOpacity
-                            style={styles.signupButton}
-                            onPress={connectusers}
+                            style={[
+                                styles.signupButton,
+                                isRequested && styles.disabledButton,
+                            ]}
+                            onPress={isRequested ? null : connectusers}
                         >
-                            <Text style={styles.signupButtonText}>{isFriend ? 'Remove' : 'Connect'}</Text>
+                            <Text style={styles.signupButtonText}>
+                                {isFriend ? 'Remove' : isRequested ? 'Requested' : 'Connect'}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 )}

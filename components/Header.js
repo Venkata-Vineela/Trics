@@ -7,7 +7,7 @@ import { styles } from '../styles';
 const Header = () => {
   return (
     <View style={styles.header}>
-      <Text style={styles.headerText}>Disaster Help</Text>
+      <Text style={styles.headerText}>Truche App</Text>
     </View>
   );
 }
