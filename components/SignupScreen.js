@@ -39,19 +39,26 @@ export default function SignupScreen( {navigation} ) {
   const [formIsValid, setFormIsValid] = useState(false); 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+  const [otherValue, setOtherValue] = useState('');
+
 
   const handleSignup = async () => {
   
    if (formIsValid) {
     console.log("in signup")
     try {
+      let organization = value;
+      if(value === 'other') {
+        organization = otherValue; 
+      }
+
       const signupData = {
       username: email, 
       pass, 
       firstName,
       lastName,
       phone,
-      organization: value,
+      organization,
       street_address,
       city,
       state,
@@ -145,9 +152,19 @@ export default function SignupScreen( {navigation} ) {
         style={styles.orgdropdown}
         itemStyle={styles.dropdownItem}
         textStyle={styles.dropdownItem}
+        onChangeValue={value => {
+          if(value === 'other') {
+            setOpen(false);
+
+          } else {
+            setOpen(false);
+          }
+        }} 
         />
         {value === 'other' && (
             <TextInput
+            value={otherValue}
+             onChangeText={setOtherValue}
              style={styles.input} 
              placeholder="Please mention the other"/>
           )} 
