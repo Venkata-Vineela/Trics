@@ -4,12 +4,13 @@ import { styles } from '../styles';
 import Header from './Header';
 import Footer from './Footer';
 import * as DocumentPicker from 'expo-document-picker';
-// import Video from 'react-native-video';
-// import PDFReader from 'react-native-pdf';
+import * as FileSystem from 'expo-file-system';
+import { SERVER_IP } from './config';
 
 export default function Addpost({navigation}) {
   const [text, setText] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  const [binaryData, setBinaryData] = useState();
 
   const handleTextChange = (text) => {
     setText(text);
@@ -18,11 +19,11 @@ export default function Addpost({navigation}) {
   const selectDoc = async () => {
     try{
       const doc = await DocumentPicker.getDocumentAsync();
-      file = doc.assets[0]      
-      console.log(file);   
-      console.log(file.mimeType); 
+      const file = doc.assets[0];      
+      // console.log(file);   
+      // console.log(file.mimeType); 
       setSelectedFile(file);  
-      console.log(selectedFile);
+      // console.log(selectedFile);
     }
     catch(error){
         console.log(error);
@@ -31,7 +32,65 @@ export default function Addpost({navigation}) {
   const clearSelectedFile = () => {
     setSelectedFile(null);
   }
- 
+
+  const handlePost = async () => {
+    try {
+      // Check if either text or file is not empty
+      if (text || selectedFile) {
+        if (selectedFile) {
+          const fileBinaryData = await readFileAsBinary(selectedFile.uri);
+          setBinaryData(fileBinaryData);
+
+        }
+        // console.log(binaryData);
+        const data = {
+          text: text,
+          filedata: binaryData, // Use the variable here
+          filename: selectedFile.name,
+          filetype: selectedFile.mimeType,
+        };
+        console.log(data);
+        // Assuming your server endpoint is '/api/posts'
+        const response = await fetch(`${SERVER_IP}/add_post`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+          credentials: 'include',
+        });
+
+        if (response.status === 200) {
+          // Post was successful, you can navigate to a success screen or handle it accordingly
+          console.log('Post successful');
+        } else {
+          // Handle error case
+          console.error('Post failed:', response.status, response.statusText);
+        }
+      } else {
+        // Both text and file are empty, handle this case if needed
+        console.warn('Both text and file are empty');
+      }
+    } catch (error) {
+      console.error('Error posting:', error);
+    }
+  };
+
+  const readFileAsBinary = async (uri) => {
+    try {
+      const fileContent = await FileSystem.readAsStringAsync(uri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+      return fileContent;
+    } catch (error) {
+      throw new Error(`Failed to read file: ${error}`);
+    }
+  };
+
+
+  
+
+   
 
     return (
       <View style={styles.container}>
@@ -40,16 +99,14 @@ export default function Addpost({navigation}) {
           <View style={styles.post}>
             <TouchableOpacity
             style={styles.editAddress}
-            onPress={() => {
-              navigation.navigate('Addpost');                
-            }}          
+            onPress={handlePost}          
           >
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
           <TextInput
             multiline
             numberOfLines={5}
-            style={{height:250, width: '90%', borderWidth:1, marginTop: 10, borderRadius: 10}}
+            style={{height:250, width: '90%', borderWidth:1, marginTop: 10, marginBottom: 10, borderRadius: 10}}
             value={text}
             onChangeText={handleTextChange}
           />
@@ -61,35 +118,13 @@ export default function Addpost({navigation}) {
           </TouchableOpacity>
           {selectedFile && (
             <View>
-              <Text>{selectedFile.name}</Text>
+              <Text style={styles.buttonText}>{selectedFile.name}</Text>
               <Image
                   source={{ uri: selectedFile.uri }}
                   style={{ width: 200, height: 150 }}
                   resizeMode="contain"
                   controls
                 />
-              
-              
-              {/* {selectedFile.mimeType === 'image/jpeg' && (
-                <Image
-                  source={{ uri: selectedFile.uri }}
-                  style={{ width: 200, height: 150 }}
-                  resizeMode="contain"
-                  controls
-                />
-              )} */}
-              {/* {selectedFile.mimeType === 'video/mp4' && (
-                <Video
-                  source={{ uri: selectedFile.uri }}
-                  style={{ width: 200, height: 150 }}
-                />
-              )} */}
-              {/* {selectedFile.mimeType === 'application/pdf' && (
-                <PDFReader
-                  source={{ uri: selectedFile.uri }}
-                  onLoad={() => console.log(`PDF loaded from ${selectedFile.uri}`)}
-                />
-              )} */}
               <TouchableOpacity onPress={clearSelectedFile}>
                 <Text>Delete selected file</Text>
               </TouchableOpacity>
