@@ -72,7 +72,6 @@ export default function SignupScreen( {navigation} ) {
         },
         body: JSON.stringify(signupData)  
       });
-      console.log(response);
 
       if(response.status==200){
         const responseData = await response.json();

@@ -5,12 +5,15 @@ import Header from './Header';
 import Footer from './Footer';
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
+import Modal from 'react-native-modal';
 import { SERVER_IP } from './config';
 
 export default function Addpost({navigation}) {
   const [text, setText] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [binaryData, setBinaryData] = useState();
+  const [popupMessage, setPopupMessage] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleTextChange = (text) => {
     setText(text);
@@ -63,6 +66,9 @@ export default function Addpost({navigation}) {
         if (response.status === 200) {
           // Post was successful, you can navigate to a success screen or handle it accordingly
           console.log('Post successful');
+          message = 'Post Successful';
+          setPopupMessage(message);
+          setIsModalVisible(true);
         } else {
           // Handle error case
           console.error('Post failed:', response.status, response.statusText);
@@ -130,14 +136,22 @@ export default function Addpost({navigation}) {
               </TouchableOpacity>
             </View>
           )}
-          
-
-
-          </View>
-        
-         
+          </View>     
         </View>
         <Footer navigation={navigation}/>
+        <Modal isVisible={isModalVisible}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalText}>{popupMessage}</Text>
+          <TouchableOpacity onPress={() => {
+            setIsModalVisible(false);
+            if (popupMessage === "Post successful") {
+              navigation.navigate('Home');
+            }
+          }}>
+            <Text style={styles.modalCloseButton}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       </View>
     );
   }  

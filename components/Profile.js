@@ -21,6 +21,7 @@ export default function Profile ({ route, navigation }) {
 
     const fetchUserData = async (username) => {
         try {
+            
             const response = await fetch(`${SERVER_IP}/get_user_data`, {
             method: 'POST',
             headers: {
@@ -32,6 +33,7 @@ export default function Profile ({ route, navigation }) {
             if (response.status === 200) {
             const data = await response.json();
             setUserData(data);
+            console.log('User Data:')
             console.log(data);
             } else {
             console.error('API request failed with status:', response.status);
@@ -44,19 +46,19 @@ export default function Profile ({ route, navigation }) {
 
     const checkFriendStatus = async (username) => {
         try {
-            console.log('friend status req sent to server');
+            
             const response = await fetch(`${SERVER_IP}/friendstatus`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({username}),
-            });
-            
+            });            
 
             if (response.status===200){
                 const data = await response.json()
                 setData(data);
+                console.log('Friend Status:')
                 console.log(data);
                 setIsRequested(data.isrequested);
                 setIsFriend(data.isfriend);
@@ -65,7 +67,6 @@ export default function Profile ({ route, navigation }) {
             console.error('Error checking friend status:', error);
         }
     }
-    
 
     const connectusers = async () => {
         if(isFriend){
@@ -89,9 +90,8 @@ export default function Profile ({ route, navigation }) {
               } catch (error) {
                 console.error('Error removing friend:', error);
               }
-
-
-        } else if(isRequested) {
+        } 
+        // else if(isRequested) {
             // try {
             //     console.log('Accept Pressed');
             //     const response = await fetch(`${SERVER_IP}/acceptfirend`,{
@@ -113,7 +113,8 @@ export default function Profile ({ route, navigation }) {
             // } catch (error) {
             //     console.error('Error sending friend request:', error);
             // }
-        }  else {
+       // }
+         else {
             try {
                 console.log('request Pressed');
                 const response = await fetch(`${SERVER_IP}/requestfriend`,{
@@ -127,9 +128,7 @@ export default function Profile ({ route, navigation }) {
                     const data = await response.json();
                     console.log(data);
                     setIsRequested(true);
-    
                     // Friend request sent successfully
-                    
                 } else {
                     console.error('Failed to send friend request:', response.status);
                 }
@@ -147,8 +146,8 @@ export default function Profile ({ route, navigation }) {
                 <Text style={styles.profiletitle}>Profile</Text>
                 {userData && (
                     <View>
-                        <Text style={styles.profileusername}>{userData[0].firstname}</Text>
-                        <Text style={styles.profilefirstname}>{userData[0].lastname}</Text>
+                        <Text style={styles.profileusername}>{userData[0].firstname} {userData[0].lastname}</Text>
+                        
                         <Text style={styles.profilefirstname}>{userData[0].organization}</Text>
                         <TouchableOpacity
                             style={[

@@ -61,6 +61,7 @@ export default function Connect({ navigation }) {
         },
         body: JSON.stringify({username}),
       })
+      console.log(response);
       if(response.status ===200){
         const data = await response.json();
         console.log(data);
@@ -105,8 +106,6 @@ export default function Connect({ navigation }) {
           // Update the searchResults state with the data from the API response
           
           setSearchResults(data);
-          
-          
         } else {
           console.error('API request failed with status:', response.status);
         }

@@ -295,6 +295,7 @@ cardContainer: {
   padding: 16,
   backgroundColor: '#FDF2F3',
   marginBottom: 10,
+
   borderRadius: 10,
 },
 userInfo: {
@@ -340,6 +341,32 @@ acceptbuttonContainer:{
 post: {
   alignItems: 'center',
   
+},
+profiletitle: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  marginTop: 10,
+},
+profileusername: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  marginTop: 8,
+  
+},
+profilefirstname: {
+  fontSize: 16,
+  marginTop: 4,
+},
+postCard: {
+  borderWidth: 2,
+  borderColor: '#ddd',
+  borderRadius: 8,
+  padding: 16,
+  marginTop: 16,
+},
+postText: {
+  fontSize: 16,
+  marginTop: 10,
 },
 
 

@@ -80,6 +80,14 @@ export default function HomePage({navigation}) {
         return <Text>Error</Text>;
       }
     };
+    const renderPostCard = (post) => (
+      <View style={styles.postCard} key={post.postnumber}>
+        {post.file_type && post.file_data && renderFile(post.file_type, post.file_data)}
+        <Text style={styles.postText}>{post.text}</Text>
+        {/* <Text>{post.file_name}</Text>
+        <Text>{post.file_type}</Text> */}
+      </View>
+    );
 
     return (
       <View style={styles.container}>
@@ -88,20 +96,22 @@ export default function HomePage({navigation}) {
                 <Text style={styles.profiletitle}>Profile</Text>
                 {userData && (
                     <View>
-                        <Text style={styles.profileusername}>{userData[0].firstname}</Text>
-                        <Text style={styles.profilefirstname}>{userData[0].lastname}</Text>
+                        <Text style={styles.profileusername}>{userData[0].firstname} {userData[0].lastname}</Text>
+                        
                         <Text style={styles.profilefirstname}>{userData[0].organization}</Text>
+                      
                     </View>
                 )}
                 <Text style={styles.profiletitle}>Posts</Text>
-                {userPosts.map((post) => (
+                {userPosts.map(renderPostCard)}
+                {/* {userPosts.map((post) => (
                   <View key={post.postnumber}>
                     {post.file_type && post.file_data && renderFile(post.file_type, post.file_data)}
                     <Text>{post.text}</Text>
                     <Text>{post.file_name}</Text>                    
                     <Text>{post.file_type}</Text>
                   </View>
-                ))}
+                ))} */}
                 
             </View>
         <Footer navigation={navigation} />            
