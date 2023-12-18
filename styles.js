@@ -65,6 +65,7 @@ export const styles = StyleSheet.create({
     marginBottom: 10, 
     paddingHorizontal: 20,
     fontSize: 20,
+  
   },
   signupcontainer: {
     alignItems: 'center',
@@ -97,7 +98,12 @@ export const styles = StyleSheet.create({
   },
   homecontent: {
     flex:1, 
-    margin: 18
+    margin: 18,
+    alignItems: 'center',
+  },
+  addpostcontent: {
+    flex: 1,
+    margin: 18,
   },
   footer: {
     flexDirection: 'row',
@@ -123,17 +129,13 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     borderRadius: 7,
-    fontSize: 20,
-    
+    fontSize: 20,    
     paddingHorizontal: 20,
   },
- 
 
   dropdownItem: {
     borderColor:'#f4584d',
-    fontSize: 20,
-
-  
+    fontSize: 20,  
   
   },
   helpcontent: {
@@ -368,6 +370,29 @@ postText: {
   fontSize: 16,
   marginTop: 10,
 },
+visibilityOption: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginRight: 10,
+},
+
+selectedVisibility: {
+  backgroundColor: 'blue',
+  borderRadius: 15, // Adjust the border radius as needed to create a circular background
+  
+},
+unselectedVisibility: {
+  borderWidth: 1,
+  borderColor: 'black',
+  borderRadius: 12,
+  padding: 5,
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginRight: 10,
+  backgroundColor: 'blue',
+  borderRadius: 15, 
+},
+
 
 
 

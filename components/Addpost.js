@@ -7,6 +7,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import Modal from 'react-native-modal';
 import { SERVER_IP } from './config';
+import { Ionicons } from '@expo/vector-icons'; 
 
 export default function Addpost({navigation}) {
   const [text, setText] = useState('');
@@ -14,6 +15,7 @@ export default function Addpost({navigation}) {
   const [binaryData, setBinaryData] = useState();
   const [popupMessage, setPopupMessage] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [postVisibility, setPostVisibility] = useState('friends');
 
   const handleTextChange = (text) => {
     setText(text);
@@ -49,8 +51,9 @@ export default function Addpost({navigation}) {
         const data = {
           text: text,
           filedata: binaryData, // Use the variable here
-          filename: selectedFile.name,
-          filetype: selectedFile.mimeType,
+          filename: selectedFile ? selectedFile.name : null,
+          filetype: selectedFile ? selectedFile.mimeType : null,
+          visibility: postVisibility,
         };
         console.log(data);
         // Assuming your server endpoint is '/api/posts'
@@ -75,7 +78,8 @@ export default function Addpost({navigation}) {
         }
       } else {
         // Both text and file are empty, handle this case if needed
-        console.warn('Both text and file are empty');
+        setPopupMessage('Both text and file are empty');
+        setIsModalVisible(true);
       }
     } catch (error) {
       console.error('Error posting:', error);
@@ -91,17 +95,12 @@ export default function Addpost({navigation}) {
     } catch (error) {
       throw new Error(`Failed to read file: ${error}`);
     }
-  };
-
-
-  
-
-   
+  };  
 
     return (
       <View style={styles.container}>
         <Header />
-        <View style={styles.homecontent}>
+        <View style={styles.addpostcontent}>
           <View style={styles.post}>
             <TouchableOpacity
             style={styles.editAddress}
@@ -109,6 +108,33 @@ export default function Addpost({navigation}) {
           >
             <Text style={styles.buttonText}>Post</Text>
           </TouchableOpacity>
+          <View style={{ flexDirection: 'row', marginTop: 10 }}>
+         
+          <TouchableOpacity
+            style={styles.visibilityOption}
+            onPress={() => setPostVisibility('friends')}
+          >
+            {postVisibility === 'friends' ? (
+              <Ionicons name="ios-checkmark-circle" size={24} color="green" />
+            ) : (
+              <Ionicons name="ellipse-outline" size={24} color="black" />
+            )}
+            <Text style={styles.buttonText}>Friends</Text>
+          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.visibilityOption}
+              onPress={() => setPostVisibility('everyone')}
+            >
+              {postVisibility === 'everyone' ? (
+              <Ionicons name="ios-checkmark-circle" size={24} color="green" />
+            ) : (
+              <Ionicons name="ellipse-outline" size={24} color="black" />
+            )}
+              <Text style={styles.buttonText}>Everyone</Text>
+            </TouchableOpacity>
+            
+          </View>
+
           <TextInput
             multiline
             numberOfLines={5}
@@ -144,7 +170,7 @@ export default function Addpost({navigation}) {
           <Text style={styles.modalText}>{popupMessage}</Text>
           <TouchableOpacity onPress={() => {
             setIsModalVisible(false);
-            if (popupMessage === "Post successful") {
+            if (popupMessage === "Post Successful") {
               navigation.navigate('Home');
             }
           }}>

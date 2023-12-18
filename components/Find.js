@@ -85,8 +85,8 @@ export default function Find( {navigation} ) {
   ? {
     latitude: userLocation?.coords.latitude || 0,
     longitude: userLocation?.coords.longitude || 0,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421
+    latitudeDelta: 0.09922,
+    longitudeDelta: 0.09921
     }
   : null;
   

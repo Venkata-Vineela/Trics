@@ -142,7 +142,7 @@ export default function Profile ({ route, navigation }) {
     return (
        <View style={styles.container}>
         <Header />
-            <View style={styles.homecontent}>
+            <View style={styles.addpostcontent}>
                 <Text style={styles.profiletitle}>Profile</Text>
                 {userData && (
                     <View>

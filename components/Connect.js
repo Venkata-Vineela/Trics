@@ -148,7 +148,7 @@ export default function Connect({ navigation }) {
   return (
     <View style={styles.container}>
       <Header />
-      <View style={styles.homecontent}>
+      <View style={styles.addpostcontent}>
         <TextInput
           style={styles.input}
           placeholder="Search users..."

@@ -17,7 +17,7 @@ export default function HomePage({navigation}) {
         >
           <Text style={styles.buttonText}>Add Post</Text>
         </TouchableOpacity>
-          <Text>home page content.</Text>
+         
         </View>
         <Footer navigation={navigation}/>
       </View>

@@ -8,20 +8,23 @@ import * as Location from 'expo-location';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
+import Modal from 'react-native-modal';
+import { SERVER_IP } from './config';
 
 export default function Reqhelp({navigation}) {
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState([
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
+    { label: 'Medical Assistance', value: 'Medical Assistance' },
+    { label: 'Shelter', value: '2' },
   ]);
-
   const [userLocation, setUserLocation] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [address, setAddress] = useState();
   const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
     getLocation();
@@ -70,9 +73,46 @@ export default function Reqhelp({navigation}) {
         setIsChecked(!isChecked);
       };
       const handleAddressConfirm = () => {
-        // set a flag to indicate that the address is confirmed
         setIsEditingAddress(false);
       };
+
+      // const sendRequestToServer = async () => {
+      //   // Prepare the data to send to the server
+      //   if(value && isChecked && address){
+      //   try {
+      //     const requestData = {
+      //       selectedNeed: value,
+      //       address: address,
+      //     };
+          
+      //     const reqresponse = await fetch(`${SERVER_IP}/sendhelprequest`, {
+      //       method: 'POST',
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //       },
+      //       body: JSON.stringify(requestData),
+      //     });
+      //     if(reqresponse.status === 200) {
+      //       setPopupMessage('Help request sent.');
+      //       setIsModalVisible(true);
+      //     } else {
+      //       setPopupMessage('Sending request failed. Please try again.');
+      //       setIsModalVisible(true);
+      //       console.log(reqresponse);
+      //     }
+      //   }
+      //   catch(error){
+      //     setPopupMessage('Error Sending Request');
+      //     setIsModalVisible(true);
+      //     console.log(error);
+      //   }
+      // } else {
+      //   setPopupMessage('Please confirm the help needed from the dropdown and the address before sending the request.');
+      //   setIsModalVisible(true);
+      // }
+          
+      // };
+
 
     return (
       <View style={styles.container}>
@@ -140,9 +180,7 @@ export default function Reqhelp({navigation}) {
             uncheckedTitle="Location not confirmed"
           />
       <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Reqhelp');
-          }}
+          onPress={sendRequestToServer}
           style={styles.reqhelpbutton}
         >
           <Text style={styles.reqhelpbuttonText}>Request</Text>
@@ -151,6 +189,19 @@ export default function Reqhelp({navigation}) {
 
         </View>
         <Footer navigation={navigation}/>
+        <Modal isVisible={isModalVisible}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>{popupMessage}</Text>
+            <TouchableOpacity
+            onPress={() => {
+              setIsModalVisible(false);
+            }}
+          >
+            <Text style={styles.modalCloseButton}>Close</Text>
+          </TouchableOpacity>
+          </View>
+        </Modal>
+
       </View>
     );
   }
