@@ -17,8 +17,7 @@ export default function Login( {navigation} ) {
     const userData = {
       username: username,
       password: pass
-    }
-    
+    }    
     try {
       // Make POST request to Flask server
       const response = await fetch(`${SERVER_IP}/login`, {
@@ -29,21 +28,11 @@ export default function Login( {navigation} ) {
         body: JSON.stringify(userData),
         credentials: 'include'
       });
-     
-
       const data = await response.json();
       console.log(data);
-
       // Check if login was successful
-      if(response.status==200) {
-        
-        const protectedResponse = await fetch(`${SERVER_IP}/protected`);
-  
-        const protectedData = await protectedResponse.json();
-  
-        // console.log('Protected Response:', protectedResponse);
-        // console.log('Protected Data:', protectedData);
-  
+      if(response.status==200) {        
+        const protectedResponse = await fetch(`${SERVER_IP}/protected`);        
         if (protectedResponse.status === 200) {
           navigation.navigate('Home');
         }
@@ -51,18 +40,15 @@ export default function Login( {navigation} ) {
         setPopupMessage('Login Failed');
         setIsModalVisible(true);
       }
-
     } catch(error) {
       console.log(error);
       setPopupMessage('An error occurred. Please try again later.');
       setIsModalVisible(true);
     }
   }
-
   return (    
     <View style={styles.container}>
       <Header />
-
       <Text style={styles.signuptext}>Login to continue..!</Text>
       <View style={styles.formContainer}>
         <TextInput
@@ -79,8 +65,7 @@ export default function Login( {navigation} ) {
           onChangeText={setPassword}
         />
         <View style={styles.signupcontainer}>
-        <TouchableOpacity
-          
+        <TouchableOpacity          
           onPress={handleLogin}
           style={styles.signupButton}
         >

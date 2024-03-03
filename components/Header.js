@@ -7,7 +7,7 @@ import { styles } from '../styles';
 const Header = () => {
   return (
     <View style={styles.header}>
-      <Text style={styles.headerText}>TRUCHE App</Text>
+      <Text style={styles.headerText}>TRUCHE</Text>
     </View>
   );
 }

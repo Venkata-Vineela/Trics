@@ -3,9 +3,13 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    justifyContent: "center",
+  },
   welcomecontainer: {
     flex: 1,
-    backgroundColor: '#f4584d',
+    backgroundColor: '#56717d',
     alignItems: 'center',
     padding: 30,
   },
@@ -27,14 +31,14 @@ export const styles = StyleSheet.create({
     borderRadius: 40, 
   },
   startbuttonText: {
-    color: '#f4584d', 
+    color: '#56717d', 
     fontSize: 20,
     fontWeight: 'bold',
   },
   header: {
     height: '10%', 
     width: '100%',
-    backgroundColor: '#f4584d', 
+    backgroundColor: '#56717d', 
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
@@ -58,7 +62,7 @@ export const styles = StyleSheet.create({
     marginTop: 30,
   },
   input: {
-    borderColor: '#f4584d',
+    borderColor: '#56717d',
     borderWidth: 1,
     backgroundColor: '#fff',
     borderRadius: 7,
@@ -71,7 +75,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   signupButton: {
-    backgroundColor: '#f4584d',
+    backgroundColor: '#56717d',
     padding: 10,
     borderRadius: 10,
     width: 120,
@@ -99,8 +103,17 @@ export const styles = StyleSheet.create({
   homecontent: {
     flex:1, 
     margin: 18,
-    alignItems: 'center',
   },
+  homefunction: { 
+    backgroundColor: '#a0b1b9',
+    margin: 10,
+    borderRadius: 20,
+    alignSelf: 'flex-start',
+    height: 45,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+ },
   addpostcontent: {
     flex: 1,
     margin: 18,
@@ -125,7 +138,7 @@ export const styles = StyleSheet.create({
   },
   orgdropdown: {
     backgroundColor: '#fff',
-    borderColor: '#f4584d',
+    borderColor: '#56717d',
     borderWidth: 1,
     marginBottom: 10,
     borderRadius: 7,
@@ -134,7 +147,7 @@ export const styles = StyleSheet.create({
   },
 
   dropdownItem: {
-    borderColor:'#f4584d',
+    borderColor:'#56717d',
     fontSize: 20,  
   
   },
@@ -145,7 +158,7 @@ export const styles = StyleSheet.create({
 
   },
   helpbutton: {
-    backgroundColor: '#f4584d',
+    backgroundColor: '#56717d',
     margin: 10,
     borderRadius: 20,
     width: 170,
@@ -154,7 +167,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   reqhelpbutton: {
-    backgroundColor: '#f4584d',
+    backgroundColor: '#56717d',
     margin: 10,
     borderRadius: 20,
     width: 150,
@@ -188,15 +201,13 @@ export const styles = StyleSheet.create({
     margin:20,
   },
  editAddress: { 
-    backgroundColor: '#fcced1',
+    backgroundColor: '#a0b1b9',
     margin: 5,
     borderRadius: 20,
     width: 200,
     height: 30,
     alignItems: 'center',
     justifyContent: 'center',
-
-
  },
  icon: {
   marginRight: 10, // Add space between the icon and text
@@ -244,7 +255,7 @@ reportinput: {
 },
 
 
-borderColor: '#f4584d',
+borderColor: '#56717d',
     borderWidth: 1,
     backgroundColor: '#fff',
     borderRadius: 7,
@@ -260,7 +271,7 @@ reportbuttoncontainer: {
   
 },
 reportButton: {
-  backgroundColor: '#f4584d',
+  backgroundColor: '#56717d',
   padding: 10,
   borderRadius: 10, 
   width: 120,
@@ -282,7 +293,7 @@ modalText: {
 },
 modalCloseButton: {
   fontSize: 16,
-  color:'#f4584d',
+  color:'#56717d',
   textAlign: 'center',
   marginTop: 10,
 },
@@ -295,7 +306,7 @@ cardContainer: {
   flexDirection: 'row',
   alignItems: 'center',
   padding: 16,
-  backgroundColor: '#FDF2F3',
+  backgroundColor: '#cfd8dc',
   marginBottom: 10,
 
   borderRadius: 10,
@@ -328,7 +339,7 @@ requserInfo: {
 
 },
 acceptButton: {
-  backgroundColor: '#f4584d',
+  backgroundColor: '#56717d',
     padding: 10,
     borderRadius: 10,
     width: 90,

@@ -49,7 +49,6 @@ export default function SignupScreen( {navigation} ) {
     return genotp;
   };
   useEffect(() => {
-    // Log the updated OTP after the state has been set
     console.log("Updated OTP:", otp);
   }, [otp]);
 
